@@ -1,0 +1,52 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
+/**
+  * main - shell starting
+  *
+  * Return: Always (0);
+**/
+int main(void)
+{
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
+	pid_t child, mypid;
+	char *argv[2];
+	int confg = -1;
+
+	confg == (read = getline(&line, &len, stdin));
+	if (confg != -1)
+		printf("Ghost-in-the-shell-$ ");
+	while (confg != -1)
+	{
+		argv[0] = strtok(line, "\n");
+		argv[1] = NULL;
+		if(argv[0])
+		{
+			child = fork();
+			mypid = getpid();
+			if (!child)
+			{
+				if (execve(argv[0], argv, NULL) == -1)
+				{
+					perror("./shell");
+				}
+				exit(98);
+			}
+			else
+			{
+				wait(NULL);
+			}
+		}
+		printf("Ghost-in-the-shell-pid: %u$", mypid);
+		confg = (read = getline(&line, &len, stdin));
+	}
+	free(line);
+	printf("\n");
+	return (0);
+}
