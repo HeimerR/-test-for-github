@@ -13,14 +13,16 @@
           // fp = fopen("/etc/motd", "r");
          //  if (fp == NULL)
            //    exit(EXIT_FAILURE);
-	printf("Ghost-in-the-shell-$ ");
-           while ((read = getline(&line, &len, stdin)) != -1) {
+//	printf("Ghost-in-the-shell-$ ");
+          // while ((read = getline(&line, &len, stdin)) != -1) {
+           read = getline(&line, &len, stdin);
                printf("Retrieved line of length %zu :\n", read);
                printf("%s", line);
-	printf("Ghost-in-the-shell-$ ");
-           }
+               printf("stdin%s\n", stdin);
+//	printf("Ghost-in-the-shell-$ ");
+  //       }
 
            free(line);
-           exit(EXIT_SUCCESS);
+           exit(0);
        }
 

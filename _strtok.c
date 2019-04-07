@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
-* strtow - concatenates all the arguments of your program
+* _strtok - concatenates all the arguments of your program
 * @str: array
 * Return: duble pointer
 */
-char **strtow(char *str)
+char **_strtok(char *str, char *delim)
 {
 	int k = 0, i = 0, count = 0, height = 0, word = 0;
 	char **p;
@@ -14,7 +14,7 @@ char **strtow(char *str)
 	while (str[i] != '\0')
 	{
 		count++;
-		if (str[i] != 32 && (str[i + 1] == 32 || str[i + 1] == '\0'))
+		if (str[i] != delim[0] && (str[i + 1] ==  delim[0] || str[i + 1] == '\0'))
 		{ height++; }
 	i++;
 	}
@@ -27,9 +27,9 @@ char **strtow(char *str)
 	count = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] != 32)
+		if (str[i] !=  delim[0])
 		count++;
-		if (count > 0 && (str[i + 1] == 32 || str[i + 1] == '\0'))
+		if (count > 0 && (str[i + 1] ==  delim[0] || str[i + 1] == '\0'))
 		{
 			p[word] = (char *)malloc((count + 1) * sizeof(char));
 			if (p[word] == NULL)

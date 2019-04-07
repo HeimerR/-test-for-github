@@ -7,18 +7,18 @@
 int main(void)
 {
 	char *line = NULL;
-	size_t len = 0;
+	size_t len = 1;
 	pid_t child;
 	char **argv;
 	int confg;
 
-	if (isatty(0))
+	if (isatty(STDIN_FILENO))
 //		write(stdout,"Ghost-in-the-shell-1 ", 21);
 		printf("Ghost-in-the-shell-1 ");
 	while ((confg = getline(&line, &len, stdin)) != -1)
 	{
-		argv = create_argv(line, len);
-		if(argv[0])
+		argv = create_argv(line, confg);
+		if(argv && argv[0])
 		{
 			child = fork();
 			if (!child)
@@ -34,14 +34,15 @@ int main(void)
 				wait(NULL);
 			}
 		}
-		if (isatty(0))
+		if (isatty(STDIN_FILENO))
 		{
 		//	write(stdout, "Ghost-in-the-shell-2 ", 21);
 			printf("Ghost-in-the-shell-2 ");
 		}
+		len = 1;
 	}
 	free(line);
-	if (isatty(0))
+	if (isatty(STDIN_FILENO))
 //	write(stdout, "\n", 1);
 	printf("\n");
 	return (0);
